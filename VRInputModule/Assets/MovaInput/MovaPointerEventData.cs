@@ -24,6 +24,4 @@ namespace Mova
 
         public override bool GetPressUp() { return MovaInput.GetPressUp(movaButton); }
     }
-
-
 }
