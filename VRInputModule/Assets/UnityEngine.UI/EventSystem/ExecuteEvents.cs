@@ -15,6 +15,8 @@ namespace UnityEngine.EventSystems
             return data as T;
         }
 
+        #region 定义委托 并 绑定私有的方法
+
         private static readonly EventFunction<IPointerEnterHandler> s_PointerEnterHandler = Execute;
 
         private static void Execute(IPointerEnterHandler handler, BaseEventData eventData)
@@ -134,6 +136,10 @@ namespace UnityEngine.EventSystems
             handler.OnCancel(eventData);
         }
 
+        #endregion
+
+        #region 通过属性公开指定的委托实例
+
         public static EventFunction<IPointerEnterHandler> pointerEnterHandler
         {
             get { return s_PointerEnterHandler; }
@@ -219,6 +225,8 @@ namespace UnityEngine.EventSystems
             get { return s_CancelHandler; }
         }
 
+        #endregion
+
         private static void GetEventChain(GameObject root, IList<Transform> eventChain)
         {
             eventChain.Clear();
@@ -235,6 +243,15 @@ namespace UnityEngine.EventSystems
 
         private static readonly ObjectPool<List<IEventSystemHandler>> s_HandlerListPool = new ObjectPool<List<IEventSystemHandler>>(null, l => l.Clear());
 
+
+        /// <summary>
+        /// 调用指定的委托方法
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="target"></param>
+        /// <param name="eventData"></param>
+        /// <param name="functor"></param>
+        /// <returns></returns>
         public static bool Execute<T>(GameObject target, BaseEventData eventData, EventFunction<T> functor) where T : IEventSystemHandler
         {
             var internalHandlers = s_HandlerListPool.Get();
@@ -270,6 +287,7 @@ namespace UnityEngine.EventSystems
             s_HandlerListPool.Release(internalHandlers);
             return handlerCount > 0;
         }
+
 
         /// <summary>
         /// Execute the specified event on the first game object underneath the current touch.

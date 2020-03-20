@@ -125,7 +125,6 @@ namespace UnityEngine.EventSystems
 
         #endregion
 
-
         private bool ShouldIgnoreEventsOnNoFocus()
         {
             switch (SystemInfo.operatingSystemFamily)

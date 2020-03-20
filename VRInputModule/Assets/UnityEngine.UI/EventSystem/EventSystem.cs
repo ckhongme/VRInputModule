@@ -201,7 +201,6 @@ namespace UnityEngine.EventSystems
                 var module = modules[i];
                 if (module == null || !module.IsActive())
                     continue;
-
                 module.Raycast(eventData, raycastResults);
             }
             raycastResults.Sort(s_RaycastComparer);
