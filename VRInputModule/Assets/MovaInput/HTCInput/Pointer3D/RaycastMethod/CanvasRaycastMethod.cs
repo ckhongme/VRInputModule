@@ -19,7 +19,7 @@ namespace HTC.UnityPlugin.Pointer3D
 
         public override void Raycast(Ray ray, float distance, List<RaycastResult> raycastResults)
         {
-            var tempCanvases = Utility.ListPool<ICanvasRaycastTarget>.Get();
+            var tempCanvases = UnityEngine.UI.ListPool<ICanvasRaycastTarget>.Get();
             tempCanvases.AddRange(canvases);
             for (int i = tempCanvases.Count - 1; i >= 0; --i)
             {
@@ -27,7 +27,7 @@ namespace HTC.UnityPlugin.Pointer3D
                 if (target == null || !target.enabled) { continue; }
                 Raycast(target.canvas, target.ignoreReversedGraphics, ray, distance, raycaster, raycastResults);
             }
-            Utility.ListPool<ICanvasRaycastTarget>.Release(tempCanvases);
+            UnityEngine.UI.ListPool<ICanvasRaycastTarget>.Release(tempCanvases);
         }
 
         public static void Raycast(Canvas canvas, bool ignoreReversedGraphics, Ray ray, float distance, Pointer3DRaycaster raycaster, List<RaycastResult> raycastResults)

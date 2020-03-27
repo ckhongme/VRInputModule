@@ -219,7 +219,9 @@ namespace UnityEngine.UI
             get
             {
                 if (EventSystem.current && EventSystem.current.currentInputModule)
+                {
                     return EventSystem.current.currentInputModule.input;
+                }
                 return null;
             }
         }
@@ -2304,7 +2306,7 @@ namespace UnityEngine.UI
                 m_CaretPosition = m_CaretSelectPosition = 0;
 
                 SendOnSubmit();
-
+                Debug.Log(input);
                 input.imeCompositionMode = IMECompositionMode.Auto;
             }
 

@@ -42,10 +42,10 @@ namespace HTC.UnityPlugin.Pointer3D
             get { return buttonEventDataListReadOnly ?? (buttonEventDataListReadOnly = buttonEventDataList.AsReadOnly()); }
         }
 
-        //public ReadOnlyCollection<RaycastResult> SortedRaycastResults
-        //{
-        //    get { return sortedRaycastResultsReadOnly ?? (sortedRaycastResultsReadOnly = sortedRaycastResults.AsReadOnly()); }
-        //}
+        public ReadOnlyCollection<RaycastResult> SortedRaycastResults
+        {
+            get { return sortedRaycastResultsReadOnly ?? (sortedRaycastResultsReadOnly = sortedRaycastResults.AsReadOnly()); }
+        }
 
         public ReadOnlyCollection<Vector3> BreakPoints
         {
@@ -56,7 +56,6 @@ namespace HTC.UnityPlugin.Pointer3D
         {
             return Vector2.zero;
         }
-
 #if UNITY_EDITOR
         protected override void OnValidate()
         {
@@ -92,11 +91,11 @@ namespace HTC.UnityPlugin.Pointer3D
         {
             base.Start();
 
-            //if (m_raycastMode != RaycastMode.DefaultRaycast)
-            //{
-            //    SetLagacyRaycastMode(m_raycastMode);
-            //    m_raycastMode = RaycastMode.DefaultRaycast;
-            //}
+            if (m_raycastMode != RaycastMode.DefaultRaycast)
+            {
+                SetLagacyRaycastMode(m_raycastMode);
+                m_raycastMode = RaycastMode.DefaultRaycast;
+            }
         }
 
         // override OnEnable & OnDisable on purpose so that this BaseRaycaster won't be registered into RaycasterManager
@@ -140,6 +139,7 @@ namespace HTC.UnityPlugin.Pointer3D
             if (ReferenceEquals(generator, null))
             {
                 // process default raycast
+
                 direction = transform.forward;
                 distance = amountDistance;
                 ray = new Ray(origin, direction);
@@ -163,7 +163,7 @@ namespace HTC.UnityPlugin.Pointer3D
             else
             {
                 generator.ResetSegments();
-                Debug.Log("has generator");
+
                 do
                 {
                     hasNext = generator.NextSegment(out direction, out distance);

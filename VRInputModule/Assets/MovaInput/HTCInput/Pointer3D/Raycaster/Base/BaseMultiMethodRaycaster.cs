@@ -51,6 +51,7 @@ namespace HTC.UnityPlugin.Pointer3D
             {
                 resultAppendList.Add(results[i]);
             }
+
             ListPool<RaycastResult>.Release(results);
         }
 

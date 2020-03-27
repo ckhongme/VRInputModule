@@ -64,12 +64,12 @@ namespace HTC.UnityPlugin.Pointer3D
 
         protected virtual void Update()
         {
-            //EventSystem is paused when application lost focus, so force ProcessRaycast here
+            // EventSystem is paused when application lost focus, so force ProcessRaycast here
             if (isActiveAndEnabled && !m_hasFocus)
             {
                 if (EventSystem.current.currentInputModule == this || coexist)
                 {
-                    //ProcessRaycast();
+                    ProcessRaycast();
                 }
             }
         }
@@ -125,7 +125,6 @@ namespace HTC.UnityPlugin.Pointer3D
             Initialize();
             if (isActiveAndEnabled)
             {
-                //Debug.Log("Process");
                 ProcessRaycast();
             }
         }
@@ -141,6 +140,8 @@ namespace HTC.UnityPlugin.Pointer3D
                     instance.CleanUpRaycaster(raycasters[i]);
                 }
             }
+
+            Debug.Log("12341234");
         }
 
         public static readonly Comparison<RaycastResult> defaultRaycastComparer = RaycastComparer;
@@ -283,7 +284,7 @@ namespace HTC.UnityPlugin.Pointer3D
                 var result = raycaster.FirstRaycastResult();
 
                 // prepare raycaster value
-                var scrollDelta = Vector2.zero;
+                var scrollDelta = raycaster.GetScrollDelta();
                 var raycasterPos = raycaster.transform.position;
                 var raycasterRot = raycaster.transform.rotation;
 
@@ -381,14 +382,13 @@ namespace HTC.UnityPlugin.Pointer3D
             {
                 if (!eventData.pressPrecessed)
                 {
-                    Debug.Log("PressDown");
                     ProcessPressDown(eventData);
                 }
+
                 HandlePressExitAndEnter(eventData, eventData.pointerCurrentRaycast.gameObject);
             }
             else if (eventData.pressPrecessed)
             {
-                Debug.Log("PressUp");
                 ProcessPressUp(eventData);
                 HandlePressExitAndEnter(eventData, null);
             }
@@ -552,7 +552,6 @@ namespace HTC.UnityPlugin.Pointer3D
                 }
                 else
                 {
-                    Debug.Log("PressExitHandler   "  + oldTarget);
                     ExecuteEvents.Execute(t.gameObject, eventData, ExecutePointer3DEvents.PressExitHandler);
                 }
             }
@@ -561,7 +560,6 @@ namespace HTC.UnityPlugin.Pointer3D
 
             for (var t = newTarget; t != commonRoot; t = t.parent)
             {
-                Debug.Log("PressEnterHandler   " + newTarget);
                 ExecuteEvents.Execute(t.gameObject, eventData, ExecutePointer3DEvents.PressEnterHandler);
             }
         }

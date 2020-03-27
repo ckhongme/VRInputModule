@@ -19,9 +19,5 @@ namespace Mova
         }
 
         public override bool GetPress() { return MovaInput.GetPress(movaButton); }
-
-        public override bool GetPressDown() { return MovaInput.GetPressDown(movaButton); }
-
-        public override bool GetPressUp() { return MovaInput.GetPressUp(movaButton); }
     }
 }
